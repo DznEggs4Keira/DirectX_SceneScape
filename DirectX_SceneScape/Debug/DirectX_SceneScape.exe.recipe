@@ -5,7 +5,11 @@
       <FullPath>D:\Work\Projects\DirectX_SceneScape\DirectX_SceneScape\Debug\DirectX_SceneScape.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
-  <ContentFiles />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>D:\Work\Projects\DirectX_SceneScape\DirectX_SceneScape\Debug\TextureShader.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />
 </Project>

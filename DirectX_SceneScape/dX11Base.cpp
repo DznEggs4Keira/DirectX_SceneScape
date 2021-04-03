@@ -12,6 +12,19 @@ dX11Base::dX11Base()
 
 dX11Base::~dX11Base()
 {
+    // Clean up
+    if (m_pD3DRenderTargetView != NULL)
+        m_pD3DRenderTargetView->Release();
+    m_pD3DRenderTargetView = NULL;
+    if (m_pSwapChain != NULL)
+        m_pSwapChain->Release();
+    m_pSwapChain = NULL;
+    if (m_pD3DContext != NULL)
+        m_pD3DContext->Release();
+    m_pD3DContext = NULL;
+    if (m_pD3DDevice != NULL)
+        m_pD3DDevice->Release();
+    m_pD3DDevice = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -129,23 +142,34 @@ bool dX11Base::Initialize(HWND hWnd, HINSTANCE hInst)
     return LoadContent();
 }
 
-void dX11Base::Terminate()
+bool dX11Base::CompileShader(LPCWSTR szFilePath, LPCSTR szFunc, LPCSTR szShaderModel, ID3DBlob** buffer)
 {
-    // Unload content
-    UnloadContent();
+    // Set flags
+    DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
+#ifdef _DEBUG
+    flags |= D3DCOMPILE_DEBUG;
+#endif
 
-    // Clean up
-    if (m_pD3DRenderTargetView != NULL)
-        m_pD3DRenderTargetView->Release();
-    m_pD3DRenderTargetView = NULL;
-    if (m_pSwapChain != NULL)
-        m_pSwapChain->Release();
-    m_pSwapChain = NULL;
-    if (m_pD3DContext != NULL)
-        m_pD3DContext->Release();
-    m_pD3DContext = NULL;
-    if (m_pD3DDevice != NULL)
-        m_pD3DDevice->Release();
-    m_pD3DDevice = NULL;
+    // Compile shader
+    HRESULT hr;
+    ID3DBlob* errBuffer = 0;
+    hr = ::D3DCompileFromFile(
+        szFilePath, 0, 0, szFunc, szShaderModel,
+        flags, 0, buffer, &errBuffer);
+
+    // Check for errors
+    if (FAILED(hr)) {
+        if (errBuffer != NULL) {
+            ::OutputDebugStringA((char*)errBuffer->GetBufferPointer());
+            errBuffer->Release();
+        }
+        return false;
+    }
+
+    // Cleanup
+    if (errBuffer != NULL)
+        errBuffer->Release();
+    return true;
+
 }
 

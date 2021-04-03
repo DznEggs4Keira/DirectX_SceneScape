@@ -4,6 +4,12 @@
 #define _DX11BASE_H_
 
 #include <d3d11.h>
+#include <d3dcompiler.h>
+#include <SimpleMath.h>
+#include <DDSTextureLoader.h>
+
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
 class dX11Base
 {
@@ -15,12 +21,11 @@ public:
     // Methods
 public:
     bool Initialize(HWND hWnd, HINSTANCE hInst);
-    void Terminate();
+    bool CompileShader(LPCWSTR szFilePath, LPCSTR szFunc, LPCSTR szShaderModel, ID3DBlob** buffer);
 
     // Overrides
 public:
     virtual bool LoadContent() = 0;
-    virtual void UnloadContent() = 0;
 
     virtual void Update() = 0;
     virtual void Render() = 0;

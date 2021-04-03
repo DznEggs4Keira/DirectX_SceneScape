@@ -63,7 +63,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // Terminate demo
-    demo.Terminate();
+    //demo.Terminate();
 
     return (int) msg.wParam;
 }
