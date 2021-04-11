@@ -5,6 +5,8 @@
 
 #include "BlankScene.h"
 
+using namespace SimpleMath;
+
 // Vertex struct
 struct Vertex
 {

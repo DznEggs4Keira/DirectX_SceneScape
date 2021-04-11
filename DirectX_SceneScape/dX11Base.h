@@ -9,7 +9,6 @@
 #include <DDSTextureLoader.h>
 
 using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 class dX11Base
 {
